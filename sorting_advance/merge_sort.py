@@ -8,7 +8,7 @@
 from copy import deepcopy
 
 from utils.sort_test_helper import SortTestHelper
-
+from sorting_basic.insertion_sort import insertion_sort
 
 class MergeSort(object):
 
@@ -51,10 +51,23 @@ class MergeSort(object):
             right = args[1]
             if left >= right:
                 return
+            """
+            优化2：对于小规模数组，使用插入排序
+            """
+            if right - left <= 15:
+                insertion_sort(lists)
+
             mid = int((left + right) / 2)
             cls.sort(lists, left, mid)
             cls.sort(lists, mid + 1, right)
             cls.merge(lists, left, mid, right)
+
+            """
+            优化1: 对于lists[mid] <= lists[mid + 1]的情况, 不进行merge
+            对于近乎有序的数组非常有效, 但是对于一般情况, 有一定的性能损失
+            """
+            # if lists[mid] > lists[mid+1]:
+            #     cls.merge(lists, left, mid, right)
         else:
             cls.sort(lists, 0, len(lists)-1)
 

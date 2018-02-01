@@ -7,7 +7,6 @@
 
 from utils.common import swap
 
-
 def selection_sort(lists):
     length = len(lists)
 
