@@ -5,8 +5,8 @@
 # @File    : insertion_sort.py
 # @Software: PyCharm
 
-from utils.common import swap
 from utils.common import TEST_LISTS
+from utils.common import swap
 
 
 def insertion_sort(lists):
