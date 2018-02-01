@@ -13,7 +13,7 @@ class SortTestHelper(object):
 
     @staticmethod
     def generate_random_list(length, start, end):
-        lists = [int(random.random() * (start + 1 - end)) for i in range(length)]
+        lists = [int(random.random() * (end + 1 - start)) for i in range(length)]
         return lists
 
     @staticmethod
