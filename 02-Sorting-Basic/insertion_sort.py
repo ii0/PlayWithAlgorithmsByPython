@@ -21,5 +21,22 @@ def insertion_sort(lists):
     return lists
 
 
+def insertion_sort_plus(lists):
+    """
+    针对交换过程进行优化
+    """
+    length = len(lists)
+
+    for i in range(1, length):
+        temp = lists[i]
+        j = i
+        while j > 0 and temp < lists[j - 1]:
+            lists[j] = lists[j - 1]
+            j -= 1
+        lists[j] = temp
+    return lists
+
+
 if __name__ == '__main__':
-    print(insertion_sort(TEST_LISTS))
+    # print(insertion_sort(TEST_LISTS))
+    print(insertion_sort_plus(TEST_LISTS))
