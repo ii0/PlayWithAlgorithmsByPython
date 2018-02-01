@@ -20,4 +20,5 @@ def selection_sort(lists):
     return lists
 
 if __name__ == '__main__':
-    pass
+    lists = [10, 8, 9, 7, 5, 3, 2, 1, 100]
+    print(selection_sort(lists))
