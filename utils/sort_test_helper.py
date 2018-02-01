@@ -37,4 +37,6 @@ class SortTestHelper(object):
         end_time = datetime.now()
         spend_time = end_time - start_time
         if cls.is_sorted(lists):
-            print(class_name.__name__ + ": " + str(spend_time.total_seconds()) + '\n')
+            print(class_name.__name__ + ": " + str(spend_time.total_seconds()) + ' s\n')
+        else:
+            print("Sorting failed, please check your fucking code!")
