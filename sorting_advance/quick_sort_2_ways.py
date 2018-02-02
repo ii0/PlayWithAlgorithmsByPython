@@ -9,6 +9,7 @@ import random
 
 from utils.common import swap
 from utils.sort_test_helper import SortTestHelper
+from sorting_basic.insertion_sort import insertion_sort
 
 
 class QuickSort2Ways(object):
@@ -50,9 +51,12 @@ class QuickSort2Ways(object):
         if len(args):
             left = args[0]
             right = args[1]
-            if left >= right:
+            # if left >= right:
+            #     return
+            # 利用插入排序进行小数组范围优化
+            if right - left <= 15:
+                insertion_sort(lists, left, right)
                 return
-
             p = cls.partition(lists, left, right)
             cls.sort(lists, left, p - 1)
             cls.sort(lists, p + 1, right)
@@ -61,5 +65,5 @@ class QuickSort2Ways(object):
 
 
 if __name__ == '__main__':
-    test_lists = SortTestHelper.generate_random_list(10000000, 0, 10000000)
+    test_lists = SortTestHelper.generate_random_list(1000000, 0, 10000000)
     SortTestHelper.test_sort(QuickSort2Ways, test_lists)

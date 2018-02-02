@@ -9,15 +9,22 @@ from utils.common import TEST_LISTS
 from utils.common import swap
 
 
-def insertion_sort(lists):
-    length = len(lists)
-
-    for i in range(1, length):
-        for j in range(i, 0, -1):
-            if lists[j] < lists[j-1]:
-                swap(lists, j, j-1)
-            else:
-                break
+def insertion_sort(lists, *args):
+    if len(args):
+        for i in range(args[0] + 1, args[1]+1):
+            for j in range(i, 0, -1):
+                if lists[j] < lists[j-1]:
+                    swap(lists, j, j-1)
+                else:
+                    break
+    else:
+        length = len(lists)
+        for i in range(1, length):
+            for j in range(i, 0, -1):
+                if lists[j] < lists[j-1]:
+                    swap(lists, j, j-1)
+                else:
+                    break
     return lists
 
 
