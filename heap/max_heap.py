@@ -12,7 +12,7 @@ class MaxHeap(object):
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.data = [-1] * (capacity + 1)
+        self.data = [-1]
         self.count = 0
 
     def is_empty(self):
@@ -23,7 +23,7 @@ class MaxHeap(object):
 
     def insert(self, item):
         assert self.count + 1 <= self.capacity
-        self.data[self.count + 1] = item
+        self.data.append(item)
         self.count += 1
         self.shift_up(self.count)
 
@@ -51,7 +51,7 @@ class MaxHeap(object):
         此函数中 // 符号代表整除，结果为整数
         :param k: 节点位置
         """
-        while k <= self.count and self.data[k] > self.data[k//2]:
+        while (1 < k <= self.count) and self.data[k] > self.data[k//2]:
             self.swap(k, k//2)
             k //= 2
 
@@ -69,10 +69,7 @@ class MaxHeap(object):
 
 
 if __name__ == '__main__':
-    max_heap = MaxHeap(100)
-    for i in range(50):
-        max_heap.insert(int(random.random() * 100))
-    lists = []
-    for i in range(50):
-        lists.append(max_heap.extract_max())
-    print(lists)
+    max_heap = MaxHeap(10)
+    for i in range(10):
+        max_heap.insert(int(random.random() * 10))
+    print(max_heap.data)
