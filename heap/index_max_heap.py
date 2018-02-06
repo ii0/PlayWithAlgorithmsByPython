@@ -13,19 +13,12 @@ class IndexMaxHeap(object):
     索引最大堆
     """
 
-    def __init__(self, lists):
-        length = len(lists)
+    def __init__(self, capacity):
         self.data = [-1]
         self.index = [-1]
-        self.capacity = length
-        self.count = length
-
-        for i in range(length):
-            self.data.append(lists[i])
-            self.index.append(i+1)
-        # 此处最后一次shift_down操作在索引1处执行
-        for k in range(self.count // 2, 0, -1):
-            self._shift_down(k)
+        self.reverse = [-1] * (capacity+1)
+        self.capacity = capacity
+        self.count = 0
 
     def is_empty(self):
         return self.count == 0
@@ -35,25 +28,30 @@ class IndexMaxHeap(object):
 
     def insert(self, i, item):
         """
-
+        插入的索引值从0开始计数，需要先内部+1
         :param i: 索引值
         :param item: 数据值
         :return:
         """
         assert self.count + 1 <= self.capacity
         assert i >= 0 and i + 1 <= self.capacity
+        i += 1
         self.data.append(item)
         self.count += 1
         self.index.append(i)
+        self.reverse[i] = self.count
         self._shift_up(self.count)
 
     def _swap_index(self, i, j):
         self.index[i], self.index[j] = self.index[j], self.index[i]
+        self.reverse[self.index[i]] = i
+        self.reverse[self.index[j]] = j
 
     def extract_max_index(self):
         assert self.count > 0
         result = self.index[1] - 1
         self._swap_index(1, self.count)
+        self.reverse[self.index[self.count]] = -1
         self.count -= 1
         self._shift_down(1)
         return result
@@ -62,6 +60,7 @@ class IndexMaxHeap(object):
         assert self.count > 0
         result = self.data[self.index[1]]
         self._swap_index(1, self.count)
+        self.reverse[self.index[self.count]] = -1
         self.count -= 1
         self._shift_down(1)
         return result
@@ -74,14 +73,27 @@ class IndexMaxHeap(object):
         assert self.count > 0
         return self.data[self.index[1]]
 
+    def _contain(self, i):
+        assert i >= 0 and i + 1 <= self.capacity
+        return self.reverse[i] != -1
+
     def change(self, i, item):
+        """
+        索引值从0开始计数，需要先内部+1
+        :param i: 索引值
+        :param item:
+        :return:
+        """
+        assert self._contain(i)
         i += 1
         self.data[i] = item
-        for j in range(self.count):
-            if self.index[j] == i:
-                self._shift_up(j)
-                self._shift_down(j)
-                return
+        # for j in range(self.count):
+        #     if self.index[j] == i:
+        #         self._shift_up(j)
+        #         self._shift_down(j)
+        #         return
+        self._shift_up(self.reverse[i])
+        self._shift_down(self.reverse[i])
 
     """
     以下为核心辅助函数
@@ -110,7 +122,21 @@ class IndexMaxHeap(object):
 
 
 if __name__ == '__main__':
-    test_lists = [10, 9, 8, 7, 1, 4, 5, 2, 3, 6]
-    index_max_heap = IndexMaxHeap(test_lists)
+    """
+    测试结果：
+             
+    堆中索引值->index:  [-1, 10, 9, 6, 7, 8, 2, 5, 1, 4, 3]
+    堆中数据值->data:   [-1, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    反向查找->reverse:  [-1, 8, 6, 10, 9, 7, 3, 4, 5, 2, 1]
+    
+    验证方式：
+    index[x] = y
+    reverse[y] = x
+    通过index堆得结构，将data数据填入，构成最大堆
+    """
+    index_max_heap = IndexMaxHeap(10)
+    for i in range(10):
+        index_max_heap.insert(i, 2*i + 1)
     print(index_max_heap.index)
     print(index_max_heap.data)
+    print(index_max_heap.reverse)
