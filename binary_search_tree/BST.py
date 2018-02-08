@@ -18,6 +18,32 @@ class BST(object):
     def is_empty(self):
         return self.count == 0
 
+    def insert(self, *args):
+        """
+        像以node为根节点的二分搜索树中，插入节点(key, value)
+        :param args: Node, Key, Value
+        :return: 插入节点后的新bst
+        """
+        if len(args) == 2:
+            key, value = args
+            self.insert(self.root, key, value)
+        else:
+            node, key, value = args
+            if node is None:
+                self.count += 1
+                return Node(key, value)
+
+            if key == node.key:
+                node.value = value
+            elif key < node.key:
+                node.left = self.insert(node.left, key, value)
+            else:
+                # key > node.key
+                node.right = self.insert(node.right, key, value)
+        return node
+
+
+
 
 class Node(object):
 
