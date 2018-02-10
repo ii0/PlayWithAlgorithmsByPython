@@ -22,7 +22,7 @@ class SortTestHelper(object):
         for i in range(swap_times):
             num1 = int(random.random() * len(lists))
             num2 = int(random.random() * len(lists))
-            num1, num2 = num2, num1
+            lists[num1], lists[num2] = lists[num2], lists[num1]
         return lists
 
     @staticmethod
