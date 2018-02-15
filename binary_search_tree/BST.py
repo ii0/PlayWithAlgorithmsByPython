@@ -83,6 +83,36 @@ class BST(object):
             key = args[0]
             return self.search(self.root, key)
 
+    """
+    深度优先遍历：前、中、后序遍历，采用递归方式
+    """
+    def pre_order(self):
+        self._pre_order(self.root)
+
+    def in_order(self):
+        self._in_order(self.root)
+
+    def post_order(self):
+        self._post_order(self.root)
+
+    def _pre_order(self, root):
+        if root is not None:
+            print(root.key)
+            self._pre_order(root.left)
+            self._pre_order(root.right)
+
+    def _in_order(self, root):
+        if root is not None:
+            self._in_order(root.left)
+            print(root.key)
+            self._in_order(root.right)
+
+    def _post_order(self, root):
+        if root is not None:
+            self._post_order(root.left)
+            self._post_order(root.right)
+            print(root.key)
+
 
 class Node(object):
 
@@ -97,3 +127,6 @@ if __name__ == '__main__':
     bst = BST()
     for i in range(len(test_array)):
         bst.insert(i, test_array[i])
+    bst.pre_order()
+    # bst.in_order()
+    # bst.post_order()
