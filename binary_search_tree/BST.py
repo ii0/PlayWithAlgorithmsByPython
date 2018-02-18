@@ -132,6 +132,72 @@ class BST(object):
             if node.right is not None:
                 q.put(node.right)
 
+    def _minimum(self, node):
+        """
+
+        :param node:
+        :return:返回以node为根的BST的最小键值所在的节点
+        """
+        if node.left is None:
+            return node
+        return self._minimum(node.left)
+
+    def _maximum(self, node):
+        """
+
+        :param node:
+        :return:返回以node为根的BST的最大键值所在的节点
+        """
+        if node.right is None:
+            return node
+        return self._maximum(node.right)
+
+    def _remove_max(self, node):
+        """
+        删除最大节点
+        :param node:
+        :return:
+        """
+        if node.right is None:
+            left_node = node.left
+            node.left = None
+            self.count -= 1
+            return left_node
+        node.right = self._remove_max(node.right)
+        return node
+
+    def _remove_min(self, node):
+        """
+        删除最小节点
+        :param node:
+        :return:
+        """
+        if node.left is None:
+            right_node = node.right
+            node.right = None
+            self.count -= 1
+            return right_node
+        node.left = self._remove_min(node.left)
+        return node
+
+    def minimum(self):
+        assert self.count != 0
+        min_node = self._minimum(self.root)
+        return min_node
+
+    def maximum(self):
+        assert self.count != 0
+        max_node = self._maximum(self.root)
+        return max_node
+
+    def remove_max(self):
+        if self.root is not None:
+            self.root = self._remove_max(self.root)
+
+    def remove_min(self):
+        if self.root is not None:
+            self.root = self._remove_min(self.root)
+
 
 class Node(object):
 
