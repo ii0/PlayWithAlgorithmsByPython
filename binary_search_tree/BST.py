@@ -5,7 +5,10 @@
 # @File    : BST.py
 # @Software: PyCharm
 
+import queue
+
 from utils.sort_test_helper import SortTestHelper
+
 
 class BST(object):
 
@@ -113,6 +116,22 @@ class BST(object):
             self._post_order(root.right)
             print(root.key)
 
+    def level_order(self):
+        """
+        广度优先遍历
+        :return:
+        """
+        q = queue.Queue()
+        q.put(self.root)
+        while not q.empty():
+            node = q.get()
+            print(node.key)
+
+            if node.left is not None:
+                q.put(node.left)
+            if node.right is not None:
+                q.put(node.right)
+
 
 class Node(object):
 
@@ -123,10 +142,12 @@ class Node(object):
 
 
 if __name__ == '__main__':
-    test_array = SortTestHelper.generate_near_ordered_list(6, 6)
+    test_array = SortTestHelper.generate_random_list(6, 0, 50)
+    # print(test_array)
     bst = BST()
     for i in range(len(test_array)):
-        bst.insert(i, test_array[i])
-    bst.pre_order()
+        bst.insert(test_array[i], test_array[i])
+    # bst.pre_order()
+    bst.level_order()
     # bst.in_order()
     # bst.post_order()
